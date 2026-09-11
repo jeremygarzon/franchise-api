@@ -366,11 +366,11 @@ terraform destroy
 
 ```
 domain/
-  model/               Domain entities and errors (no framework dependencies)
-  usecase/             Ports and use cases (business logic)
+  model/               Domain entities, gateways and errors (no framework dependencies)
+  usecase/             Use cases (business logic)
 infrastructure/
   entry-points/
-    reactive-web/      Routers, handlers, DTOs, error mapping, OpenAPI
+    reactive-web/      Routers, handlers, DTOs, error mapping
   driven-adapters/
     r2dbc-postgresql/  Persistence adapters, resilience, schema/seed scripts
 applications/
