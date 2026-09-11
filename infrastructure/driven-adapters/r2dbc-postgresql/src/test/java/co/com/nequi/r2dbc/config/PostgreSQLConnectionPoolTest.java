@@ -13,7 +13,7 @@ class PostgreSQLConnectionPoolTest {
     void buildsPoolWithExplicitSizing() {
         PostgresqlConnectionProperties properties = new PostgresqlConnectionProperties(
                 "localhost", 5432, "dbName", "public", "username", "password",
-                5, 20, 30);
+                5, 20, 30, "disable");
 
         ConnectionPool pool = connectionPool.getConnectionConfig(properties);
 
@@ -24,7 +24,18 @@ class PostgreSQLConnectionPoolTest {
     void buildsPoolWithDefaultSizingWhenNotProvided() {
         PostgresqlConnectionProperties properties = new PostgresqlConnectionProperties(
                 "localhost", 5432, "dbName", "public", "username", "password",
-                null, null, null);
+                null, null, null, null);
+
+        ConnectionPool pool = connectionPool.getConnectionConfig(properties);
+
+        assertNotNull(pool);
+    }
+
+    @Test
+    void buildsPoolWithSslModeRequire() {
+        PostgresqlConnectionProperties properties = new PostgresqlConnectionProperties(
+                "localhost", 5432, "dbName", "public", "username", "password",
+                5, 20, 30, "require");
 
         ConnectionPool pool = connectionPool.getConnectionConfig(properties);
 
