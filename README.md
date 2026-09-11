@@ -1,8 +1,18 @@
 # Franchise Management API
+# Franchise Management API
 
 Reactive REST API to manage a network of commercial franchises, their branches and the
 products of each branch. Built with Spring WebFlux, Java 17 and R2DBC over PostgreSQL,
 following the Bancolombia Clean Architecture (hexagonal) scaffold.
+
+## Live demo
+
+The API is deployed on AWS ECS Fargate behind an Application Load Balancer:
+
+- Base URL: `http://franchise-api-dev-alb-1085428679.us-east-1.elb.amazonaws.com`
+- Swagger UI: http://franchise-api-dev-alb-1085428679.us-east-1.elb.amazonaws.com/swagger-ui.html
+- Health check: http://franchise-api-dev-alb-1085428679.us-east-1.elb.amazonaws.com/actuator/health
+- Example (highest-stock product per branch): http://franchise-api-dev-alb-1085428679.us-east-1.elb.amazonaws.com/api/franchises/1/highest-stock-products
 
 ## Features
 
