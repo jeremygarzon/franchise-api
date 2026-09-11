@@ -64,3 +64,8 @@ resilience4j:
         - "co.com.nequi.model.exception.DomainException"
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
+springdoc:
+  api-docs:
+    path: "/v3/api-docs"
+  swagger-ui:
+    path: "/swagger-ui.html"
