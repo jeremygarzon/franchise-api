@@ -1,0 +1,19 @@
+# Terraform working directories and providers
+**/.terraform/*
+.terraform.lock.hcl
+
+# State files (must never be committed; they live in the S3 remote backend)
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Variable files that may contain sensitive values
+*.auto.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Plan output files
+*.tfplan
