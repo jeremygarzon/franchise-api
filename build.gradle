@@ -6,6 +6,7 @@ buildscript {
 		jacocoVersion = '0.8.15'
 		blockHoundVersion = '1.0.17.RELEASE'
         lombokVersion = '1.18.46'
+        resilience4jVersion = '2.4.0'
 	}
 }
 

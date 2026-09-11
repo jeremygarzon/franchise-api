@@ -6,9 +6,66 @@ spring:
     name: franchise-api
   devtools:
     add-properties: false
-  h2:
-    console:
-      enabled: true
-      path: /h2
   profiles:
     include:
+  sql:
+    init:
+      mode: never
+
+# R2DBC PostgreSQL adapter
+adapters:
+  r2dbc:
+    host: ${R2DBC_HOST:localhost}
+    port: ${R2DBC_PORT:5432}
+    database: ${R2DBC_DATABASE:franchise}
+    schema: ${R2DBC_SCHEMA:public}
+    username: ${R2DBC_USERNAME:postgres}
+    password: ${R2DBC_PASSWORD:postgres}
+    initial-size: ${R2DBC_POOL_INITIAL_SIZE:}
+    max-size: ${R2DBC_POOL_MAX_SIZE:}
+    max-idle-time-minutes: ${R2DBC_POOL_MAX_IDLE_TIME_MINUTES:}
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+# Resilience patterns applied to the r2dbc adapter (instance name: r2dbcAdapter).
+resilience4j:
+  circuitbreaker:
+    instances:
+      r2dbcAdapter:
+        register-health-indicator: true
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 20
+        minimum-number-of-calls: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        ignore-exceptions:
+          - co.com.nequi.model.exception.DomainException
+  timelimiter:
+    instances:
+      r2dbcAdapter:
+        timeout-duration: 3s
+        cancel-running-future: true
+  retry:
+    instances:
+      r2dbcAdapter:
+        max-attempts: 3
+        wait-duration: 200ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        ignore-exceptions:
+          - co.com.nequi.model.exception.DomainException
